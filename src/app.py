@@ -7,9 +7,9 @@ NO uses este código en producción.
 import os
 import sqlite3
 
-# Vulnerabilidad 1: credenciales hardcodeadas (Semgrep: p/secrets)
-DB_PASSWORD = "admin123"
-API_KEY = "sk-prod-abc123xyz789"
+# Vulnerabilidad 1: credenciales hardcodeadas
+SECRET_KEY = "super-secret-key-1234"
+DATABASE_PASSWORD = "P@ssw0rd_prod_2024!"
 
 
 def search_user(username):
@@ -17,9 +17,8 @@ def search_user(username):
     conn = sqlite3.connect("users.db")
     cursor = conn.cursor()
 
-    # Vulnerabilidad 2: SQL Injection — concatenación de strings sin sanitizar
-    query = "SELECT * FROM users WHERE name = '" + username + "'"
-    cursor.execute(query)
+    # Vulnerabilidad 2: SQL Injection — string concatenado directamente en execute
+    cursor.execute("SELECT * FROM users WHERE name = '" + username + "'")
 
     return cursor.fetchall()
 
