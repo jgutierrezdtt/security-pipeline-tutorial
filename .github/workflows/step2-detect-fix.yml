@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'src/app.py'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -32,7 +33,8 @@ jobs:
         if: steps.check-step.outputs.active == 'true'
         run: |
           if grep -qF 'os.system(' src/app.py; then
-            echo "::error file=src/app.py::Todavía existe os.system() en el código. Reemplázalo con subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
+            echo "::error file=src/app.py::Todavía existe os.system() en el código."
+            echo "::error file=src/app.py::Reemplázalo con: subprocess.run([\"ping\", \"-c\", \"1\", host], check=True)"
             exit 1
           fi
           echo "✅ os.system() eliminado"
@@ -40,11 +42,22 @@ jobs:
       - name: Verificar que SQL injection fue corregido
         if: steps.check-step.outputs.active == 'true'
         run: |
-          if grep -qF '+ username' src/app.py; then
-            echo "::error file=src/app.py::La consulta SQL sigue usando concatenación con username. Usa: cursor.execute(\"SELECT * FROM users WHERE name = ?\", (username,))"
+          if grep -qP 'execute\(.*\+' src/app.py; then
+            echo "::error file=src/app.py::La consulta SQL sigue usando concatenación."
+            echo "::error file=src/app.py::Usa: cursor.execute(\"SELECT * FROM users WHERE name = ?\", (username,))"
             exit 1
           fi
           echo "✅ Consulta SQL parametrizada"
+
+      - name: Verificar que las credenciales hardcodeadas fueron eliminadas
+        if: steps.check-step.outputs.active == 'true'
+        run: |
+          if grep -qiP '(secret_key|database_password)\s*=\s*"[^"]+"' src/app.py; then
+            echo "::error file=src/app.py::Todavía hay credenciales hardcodeadas."
+            echo "::error file=src/app.py::Usa: os.environ.get(\"SECRET_KEY\", \"\")"
+            exit 1
+          fi
+          echo "✅ Credenciales hardcodeadas eliminadas"
 
       - name: Actualizar README al Paso 3
         if: steps.check-step.outputs.active == 'true'
