@@ -20,13 +20,24 @@
 - **Command Injection** — el input llega a `os.system()` permitiendo ejecutar comandos arbitrarios; se evita con `subprocess.run(list)`
 - **Hardcoded secrets** — credenciales en el código que pueden filtrarse en el historial de git; se usan variables de entorno en su lugar
 
+### Añade tu badge al perfil de GitHub
+
+Copia este badge y pégalo en el `README.md` de tu repositorio de perfil (`tu-usuario/tu-usuario`):
+
+```markdown
+![Security Pipeline Tutorial](https://img.shields.io/badge/Security_Pipeline_Tutorial-Completado_%E2%9C%85-4caf50?style=flat-square&logo=githubactions&logoColor=white)
+```
+
+Resultado: ![Security Pipeline Tutorial](https://img.shields.io/badge/Security_Pipeline_Tutorial-Completado_%E2%9C%85-4caf50?style=flat-square&logo=githubactions&logoColor=white)
+
+> Ve a `github.com/tu-usuario/tu-usuario` (o créalo si no existe) y edita el `README.md` para añadirlo.
+
 ### Próximos pasos recomendados
 
 1. **Activa Dependabot en tus repos reales** — revisa Security → Dependabot alerts
 2. **Explora más reglas de Semgrep** — prueba `p/owasp-top-ten` o `p/django` según tu stack
-3. **Conoce el OWASP Top 10** — las 10 vulnerabilidades más críticas en aplicaciones web
-4. **Prueba CodeQL** — análisis semántico más profundo disponible con GitHub Advanced Security
-5. **Consulta el repo de pipelines** — workflows reutilizables de seguridad para toda la organización
+3. **Prueba CodeQL** — análisis semántico más profundo disponible con GitHub Advanced Security
+4. **Consulta el repo de pipelines** — workflows reutilizables de seguridad para toda la organización
 
 ---
 *Tutorial completado · Seguridad en Pipelines de GitHub Actions*
