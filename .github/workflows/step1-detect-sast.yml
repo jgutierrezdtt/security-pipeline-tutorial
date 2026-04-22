@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/sast.yml'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -13,7 +14,6 @@ jobs:
   detect-sast:
     name: Verificar y avanzar al Paso 2
     runs-on: ubuntu-latest
-    # Evitar que se ejecute cuando el bot actualiza el README
     if: github.actor != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
