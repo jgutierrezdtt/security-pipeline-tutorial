@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  issues: write
 
 jobs:
   detect-dependabot:
@@ -67,4 +68,62 @@ jobs:
               }
             });
 
-            core.notice('🎉 Tutorial completado — ¡enhorabuena!');
+            core.notice('🎉 Tutorial completado — README actualizado');
+
+      - name: Crear Issue de certificado
+        if: steps.check-step.outputs.active == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const badge = `![Security Pipeline Tutorial](https://img.shields.io/badge/Security_Pipeline_Tutorial-Completado_%E2%9C%85-4caf50?style=flat-square&logo=githubactions&logoColor=white)`;
+
+            const body = `## 🎉 ¡Tutorial completado!
+
+            **${context.actor}** ha completado el tutorial de seguridad en pipelines de GitHub Actions.
+
+            ---
+
+            ### Habilidades demostradas
+
+            | ✅ | Habilidad |
+            |---|---|
+            | ✅ | SAST con Semgrep — análisis estático de código |
+            | ✅ | Corrección de SQL Injection |
+            | ✅ | Corrección de Command Injection |
+            | ✅ | Eliminación de credenciales hardcodeadas |
+            | ✅ | Configuración de Dependabot para SCA |
+
+            ---
+
+            ### Tu badge
+
+            Copia este código y pégalo en el \`README.md\` de tu perfil de GitHub (\`github.com/${context.actor}/${context.actor}\`):
+
+            \`\`\`markdown
+            ${badge}
+            \`\`\`
+
+            > Si no tienes repositorio de perfil, créalo en https://github.com/new con el nombre **${context.actor}**
+
+            ---
+            *Completado el ${new Date().toLocaleDateString('es-ES', {day: 'numeric', month: 'long', year: 'numeric'})} · Security Pipeline Tutorial*`;
+
+            const { data: issue } = await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🎉 Tutorial completado — Certificado de finalización',
+              body: body,
+              labels: []
+            });
+
+            // Cerrar el issue inmediatamente como "completed"
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              state: 'closed',
+              state_reason: 'completed'
+            });
+
+            core.notice(`🎉 Certificado creado: ${issue.html_url}`);
