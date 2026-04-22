@@ -25,13 +25,11 @@ jobs:
   semgrep:
     name: Análisis estático
     runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
     steps:
       - uses: actions/checkout@v4
-      - uses: semgrep/semgrep-action@v1
-        with:
-          config: >-
-            p/python
-            p/secrets
+      - run: semgrep scan --config=p/python --config=p/secrets --config=p/owasp-top-ten --error src/
 ```
 
 ### Cómo hacerlo
@@ -55,8 +53,12 @@ git push
 
 Cuando hagas push de `sast.yml`:
 - Semgrep analizará `src/app.py` automáticamente
-- Encontrará las vulnerabilidades presentes en el código
-- Verás los resultados en la pestaña **Actions** de tu repositorio
+- Detectará las tres vulnerabilidades:
+  - **Hardcoded secrets** — credenciales en el código fuente
+  - **SQL Injection** — string concatenado directamente en `cursor.execute()`
+  - **Command Injection** — `os.system()` con input del usuario
+- El workflow fallará (❌) porque existen hallazgos — eso es lo esperado
+- Verás los resultados detallados en la pestaña **Actions** → click en el run → click en el job `semgrep`
 - Este README se actualizará al **Paso 2** ✅
 
 ---
