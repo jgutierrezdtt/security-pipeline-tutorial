@@ -31,3 +31,13 @@ Cada vez que completes un paso, este README se actualizará automáticamente con
 ---
 
 > **Nota**: Si en lugar de "Use this template" hiciste fork, activa Actions desde **Settings → Actions → Allow all actions** antes de empezar.
+
+---
+
+### ¿Quieres ir más lejos?
+
+Cuando completes este tutorial (3 pasos), continúa con el nivel avanzado:
+
+**[🚀 Tutorial Avanzado de DevSecOps — 10 pasos](https://github.com/jgutierrezdtt/advanced-devsecops-tutorial)**
+
+> SAST · CI/CD Hardening · Container Scan · IaC Security · Secrets Detection · Falsos Positivos · Política de Excepciones · SBOM
