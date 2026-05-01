@@ -32,6 +32,23 @@ Resultado: ![Security Pipeline Tutorial](https://img.shields.io/badge/Security_P
 
 > Ve a `github.com/tu-usuario/tu-usuario` (o créalo si no existe) y edita el `README.md` para añadirlo.
 
+### ¿Listo para el siguiente nivel?
+
+Has dominado los fundamentos. El siguiente tutorial cubre 10 disciplinas de DevSecOps de nivel enterprise:
+
+| # | Disciplina | Herramienta |
+|---|---|---|
+| 1-2 | SAST + CI/CD Hardening | Semgrep, permisos mínimos |
+| 3-4 | Container Scan + Fix | Trivy, Dockerfile hardening |
+| 5-6 | IaC Scan + Fix | Checkov, Terraform |
+| 7 | Secrets Detection | gitleaks |
+| 8-9 | Falsos Positivos + Excepciones | nosemgrep, governance YAML |
+| 10 | SBOM + Supply Chain | Syft, Grype |
+
+**[🚀 Continuar con el Tutorial Avanzado de DevSecOps — 10 pasos](https://github.com/jgutierrezdtt/advanced-devsecops-tutorial)**
+
+---
+
 ### Próximos pasos recomendados
 
 1. **Activa Dependabot en tus repos reales** — revisa Security → Dependabot alerts
